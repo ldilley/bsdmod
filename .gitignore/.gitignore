@@ -1,0 +1,11 @@
+*
+#*.o
+#*.so
+#*.core
+!.gitignore
+!*.c
+!*.h
+!*.sh
+!LICENSE
+!Makefile
+!README.md
