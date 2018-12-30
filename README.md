@@ -1,4 +1,4 @@
-# BSDmod
+# BSDMod
 This repo contains a variety of FreeBSD kernel modules that are for educational purposes.
 
 See the equivalent Linux kernel module project: [LinMod](https://github.com/ldilley/linmod)
