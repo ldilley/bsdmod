@@ -6,17 +6,15 @@
 
 /* The order of these headers is significant */
 #include <sys/types.h>
-#include <sys/systm.h>
 #include <sys/module.h>
 #include <sys/systm.h>
-#include <sys/errno.h>
 #include <sys/param.h>
 #include <sys/kernel.h>
 #include "bsdmod.h"
 
 #define MODULE_NAME "bsdmod"
 
-MODULE_VERSION(bsdmod, 1);
+MODULE_VERSION(MODULE_NAME, 1);
 
 void bsdmod_sum(int x, int y)
 {
