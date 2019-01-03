@@ -38,7 +38,7 @@ static int bsdmod_handler(struct module *m, int what, void *arg)
       err = EOPNOTSUPP;
       break;
   }
-  return(err);
+  return err;
 }
 
 static moduledata_t bsdmod_mod =
