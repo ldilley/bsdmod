@@ -21,6 +21,9 @@ These modules demonstrate:
 5. To unload a module: `kldunload -v <module_name>`
 6. To view module output after unloading: `dmesg`
 
+### ToDo
+* Provide device file, module dependency, system call, and sysctl examples
+
 #### Notes:
 * The `-v` argument in the above instructions is optional and generates verbose output.
 * `make clean` can be used at the top level to remove build data for everything or in an individual directory to only remove build data for that component.
