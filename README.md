@@ -20,3 +20,11 @@ These modules demonstrate:
 4. To view module output after loading: `dmesg`
 5. To unload a module: `kldunload -v <module_name>`
 6. To view module output after unloading: `dmesg`
+
+#### Notes:
+* The `-v` argument in the above instructions is optional and generates verbose output.
+* `make clean` can be used at the top level to remove build data for everything or in an individual directory to only remove build data for that component.
+* `make load` can be used to quickly build and load a particular component module while in its directory.
+* `make unload` can be used to unload a particular component module while in its directory.
+* The FreeBSD kernel source is required to build the modules contained in this project. It can be obtained via (replace with a closer mirror and your FreeBSD version): `svnlite checkout https://svn0.us-east.freebsd.org/base/releng/11.1 /usr/src`
+* FreeBSD 11.1 was used for the development and testing of this project.
