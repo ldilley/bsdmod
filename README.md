@@ -21,8 +21,54 @@ These modules demonstrate:
 5. To unload a module: `kldunload -v <module_name>`
 6. To view module output after unloading: `dmesg`
 
+### Examples
+##### Module Dependency
+```
+root@fbsdev:/usr/local/devel/bsdmod # kldload -v ./bsdmod2.ko
+Loaded ./bsdmod2.ko, id=6
+root@fbsdev:/usr/local/devel/bsdmod # dmesg | tail -n3
+bsdmod->bsdmod_handler(): Kernel module loaded.
+bsdmod2->bsdmod2_handler(): Kernel module loaded.
+bsdmod->bsdmod_sum(2, 3): 2 + 3 = 5
+root@fbsdev:/usr/local/devel/bsdmod # kldstat -v | sed -n '/bsdmod2.ko/,//p'
+ 6    1 0xffffffff8261c000 41e      bsdmod2.ko (./bsdmod2.ko)
+        Contains modules:
+                Id Name
+                506 bsdmod2
+                505 bsdmod
+```
+
+##### Syscall
+```
+root@fbsdev:/usr/local/devel/bsdmod_syscall # kldload -v ./bsdmod_syscall.ko
+Loaded ./bsdmod_syscall.ko, id=6
+root@fbsdev:/usr/local/devel/bsdmod_syscall # cd ../syscall_test/
+root@fbsdev:/usr/local/devel/syscall_test # ./syscall_test
+sys/bsdmod_syscall system call ID #: 210
+System call performed. Check dmesg for output of sys/bsdmod_syscall->testcall().
+root@fbsdev:/usr/local/devel/syscall_test # dmesg | tail -n2
+bsdmod_syscall->bsdmod_syscall_handler(): Kernel module loaded.
+bsdmod_syscall->testcall() called.
+```
+
+##### Sysctl
+```
+root@fbsdev:/usr/local/devel/bsdmod_sysctl # kldload -v ./bsdmod_sysctl.ko
+Loaded ./bsdmod_sysctl.ko, id=6
+root@fbsdev:/usr/local/devel/bsdmod_sysctl # sysctl -a | grep bsdmod
+bsdmod.test: 0
+root@fbsdev:/usr/local/devel/bsdmod_sysctl # sysctl bsdmod.test=1
+bsdmod.test: 0 -> 1
+root@fbsdev:/usr/local/devel/bsdmod_sysctl # sysctl -a | grep bsdmod
+bsdmod.test: 1
+root@fbsdev:/usr/local/devel/bsdmod_sysctl # kldunload -v bsdmod_sysctl.ko
+Unloading bsdmod_sysctl.ko, id=6
+root@fbsdev:/usr/local/devel/bsdmod_sysctl # sysctl -a | grep bsdmod
+root@fbsdev:/usr/local/devel/bsdmod_sysctl #
+```
+
 ### ToDo
-* Provide device file, module dependency, system call, and sysctl examples
+* Provide device file example
 
 #### Notes:
 * The `-v` argument in the above instructions is optional and generates verbose output.
