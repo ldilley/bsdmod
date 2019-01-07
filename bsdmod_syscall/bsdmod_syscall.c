@@ -20,7 +20,7 @@ static int offset = NO_SYSCALL;
 
 static int testcall(struct thread *td, void *arg)
 {
-  printf("%s->%s called.\n", MODULE_NAME, __func__);
+  printf("%s->%s() called.\n", MODULE_NAME, __func__);
   return 0;
 }
 
@@ -30,7 +30,7 @@ static struct sysent bsdmod_sysent =
   testcall /* sy_call */
 };
 
-static int bsdmod_sysctl_handler(struct module *m, int what, void *arg)
+static int bsdmod_syscall_handler(struct module *m, int what, void *arg)
 {
   int err = 0;
 
@@ -49,4 +49,4 @@ static int bsdmod_sysctl_handler(struct module *m, int what, void *arg)
   return err;
 }
 
-SYSCALL_MODULE(bsdmod_syscall, &offset, &bsdmod_sysent, bsdmod_sysctl_handler, NULL);
+SYSCALL_MODULE(bsdmod_syscall, &offset, &bsdmod_sysent, bsdmod_syscall_handler, NULL);
