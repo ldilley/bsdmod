@@ -14,8 +14,8 @@
 
 #define MODULE_NAME "bsdmod2"
 
-MODULE_VERSION(MODULE_NAME, 1);
-MODULE_DEPEND(MODULE_NAME, bsdmod, 1, 1, 5);
+MODULE_VERSION(bsdmod2, 1);
+MODULE_DEPEND(bsdmod2, bsdmod, 1, 1, 5);
 
 static int bsdmod2_handler(struct module *m, int what, void *arg)
 {

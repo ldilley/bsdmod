@@ -14,7 +14,7 @@
 
 #define MODULE_NAME "bsdmod"
 
-MODULE_VERSION(MODULE_NAME, 1);
+MODULE_VERSION(bsdmod, 1);
 
 void bsdmod_sum(int x, int y)
 {
