@@ -22,6 +22,43 @@ These modules demonstrate:
 6. To view module output after unloading: `dmesg`
 
 ### Examples
+##### Device
+```
+root@fbsdev:/usr/local/devel/bsdmod_dev # kldload -v ./bsdmod_dev.ko
+Loaded ./bsdmod_dev.ko, id=5
+root@fbsdev:/usr/local/devel/bsdmod_dev # ls -la /dev/bsdmod
+crw-r--r--  1 root  wheel  0x65 Jan  9 01:50 /dev/bsdmod
+root@fbsdev:/usr/local/devel/bsdmod_dev # echo "foo bar baz" > /dev/bsdmod
+root@fbsdev:/usr/local/devel/bsdmod_dev # cat /dev/bsdmod
+foo bar baz
+root@fbsdev:/usr/local/devel/bsdmod_dev # echo "foo" >> /dev/bsdmod
+root@fbsdev:/usr/local/devel/bsdmod_dev # cat /dev/bsdmod
+foo
+root@fbsdev:/usr/local/devel/bsdmod_dev # kldunload -v bsdmod_dev
+Unloading bsdmod_dev.ko, id=5
+root@fbsdev:/usr/local/devel/bsdmod_dev # cat /dev/bsdmod
+cat: /dev/bsdmod: No such file or directory
+root@fbsdev:/usr/local/devel/bsdmod_dev # dmesg | tail -n 18
+bsdmod_dev->bsdmod_dev_handler(): Device /dev/bsdmod created.
+bsdmod_dev->bsdmod_dev_handler(): Kernel module loaded.
+bsdmod_dev->device_open(): /dev/bsdmod opened.
+bsdmod_dev->device_write(): uiomove() of 12 bytes completed.
+bsdmod_dev->device_close(): /dev/bsdmod closed.
+bsdmod_dev->device_open(): /dev/bsdmod opened.
+bsdmod_dev->device_read(): uiomove() of 13 bytes completed.
+bsdmod_dev->device_read(): uiomove() of 0 bytes completed.
+bsdmod_dev->device_close(): /dev/bsdmod closed.
+bsdmod_dev->device_open(): /dev/bsdmod opened.
+bsdmod_dev->device_write(): uiomove() of 4 bytes completed.
+bsdmod_dev->device_close(): /dev/bsdmod closed.
+bsdmod_dev->device_open(): /dev/bsdmod opened.
+bsdmod_dev->device_read(): uiomove() of 5 bytes completed.
+bsdmod_dev->device_read(): uiomove() of 0 bytes completed.
+bsdmod_dev->device_close(): /dev/bsdmod closed.
+bsdmod_dev->bsdmod_dev_handler(): Device /dev/bsdmod removed.
+bsdmod_dev->bsdmod_dev_handler(): Kernel module unloaded.
+```
+
 ##### Module Dependency
 ```
 root@fbsdev:/usr/local/devel/bsdmod # kldload -v ./bsdmod2.ko
@@ -66,9 +103,6 @@ Unloading bsdmod_sysctl.ko, id=6
 root@fbsdev:/usr/local/devel/bsdmod_sysctl # sysctl -a | grep bsdmod
 root@fbsdev:/usr/local/devel/bsdmod_sysctl #
 ```
-
-### ToDo
-* Provide device file example
 
 #### Notes:
 * The `-v` argument in the above instructions is optional and generates verbose output.
